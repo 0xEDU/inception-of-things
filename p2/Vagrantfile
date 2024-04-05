@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     master.vm.provider "virtualbox" do |v|
       v.gui = false
       v.name = "guribeirS"
-      v.memory = 1024
+      v.memory = 2048
       v.cpus = 1
     end
 	master.vm.provision "file", source: "./config/", destination: "/home/vagrant/"
