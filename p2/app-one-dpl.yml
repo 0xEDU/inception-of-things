@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-one-dpl
+  labels:
+    app: app-one-dpl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-one-pod
+  template:
+    metadata:
+      labels:
+        app: app-one-pod
+    spec:
+      containers:
+      - name: app-one-cnt
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
