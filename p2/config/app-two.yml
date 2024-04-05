@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-two-svc
+  namespace: default
+  labels:
+    app: app-two-svc
+spec:
+  clusterIP: 10.43.193.160
+  selector:
+    app: app-two-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-two-dpl
+  labels:
+    app: app-two-dpl
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-two-pod
+  template:
+    metadata:
+      labels:
+        app: app-two-pod
+    spec:
+      containers:
+      - name: app-two-cnt
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
+
