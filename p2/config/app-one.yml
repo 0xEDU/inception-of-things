@@ -6,6 +6,7 @@ metadata:
   labels:
     app: app-one-svc
 spec:
+  clusterIP: 10.43.229.156
   selector:
     app: app-one-pod
   ports:
