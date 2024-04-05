@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-three-svc
+  namespace: default
+  labels:
+    app: app-three-svc
+spec:
+  clusterIP: 10.43.171.213
+  selector:
+    app: app-three-pod
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-three-dpl
+  labels:
+    app: app-three-dpl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-three-pod
+  template:
+    metadata:
+      labels:
+        app: app-three-pod
+    spec:
+      containers:
+      - name: app-three-cnt
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
+
