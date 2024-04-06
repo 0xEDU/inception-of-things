@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: iot-app-project
+  labels:
+    app: iot-app
+spec:
+  # Project description
+  description: Our ArgoCD Project to deploy our app locally
+  # Allow manifests to deploy only from Sokube git repositories
+  sourceRepos:
+  - "git@github.com/guribeir/*"
+  # Only permit to deploy applications in the same cluster
+  destinations:
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  # Enables namespace orphaned resource monitoring.
+  orphanedResources:
+    warn: false

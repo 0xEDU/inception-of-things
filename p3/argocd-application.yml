@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app: iot-app
+  name: iot-app
+spec:
+  project: iot-app-project
+  source:
+    repoURL: git@github.com/guribeir/guribeir-argocd.git
+    targetRevision: v1
+    path: app
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
