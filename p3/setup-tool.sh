@@ -4,7 +4,7 @@
 #sudo wget -q https://github.com/argoproj/argo-cd/releases/download/v2.10.6/argocd-linux-amd64 -O /usr/local/bin/argocd # install argocd cli
 #sudo chmod 655 /usr/local/bin/argocd # give proper permission to argocd
 
-k3d cluster create p3-cluster -p "8081:8888@loadbalancer" -p "8080:80@loadbalancer" # create cluster
+k3d cluster create p3-cluster -p "8081:8081@loadbalancer" -p "8080:80@loadbalancer" # create cluster
 
 kubectl create namespace argocd # add argocd namespace
 kubectl create namespace dev # add dev namespace
