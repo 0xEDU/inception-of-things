@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: iot-app-project
+  labels:
+    app: iot
+spec:
+  description: Our ArgoCD Project to deploy our app locally
+  sourceRepos:
+  - "https://github.com/guiribei/*"
+  destinations:
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  # Enables namespace orphaned resource monitoring.
+  orphanedResources:
+    warn: false
