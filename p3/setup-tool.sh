@@ -4,6 +4,10 @@
 #sudo wget -q https://github.com/argoproj/argo-cd/releases/download/v2.10.6/argocd-linux-amd64 -O /usr/local/bin/argocd # install argocd cli
 #sudo chmod 655 /usr/local/bin/argocd # give proper permission to argocd
 
+#curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+#sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
 k3d cluster create p3-cluster -p "8081:8081@loadbalancer" -p "8080:80@loadbalancer" # create cluster
 
 kubectl create namespace argocd # add argocd namespace
