@@ -8,10 +8,10 @@
 
 # sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-k3d cluster create bonus-cluster -p "8081:8081@loadbalancer" -p "8080:80@loadbalancer" -p "8082:443@loadbalancer" # create cluster
+k3d cluster create bonus-cluster -p "8080:80@loadbalancer" # create cluster
 
-kubectl create namespace argocd # add argocd namespace
-kubectl create namespace dev # add dev namespace
+# kubectl create namespace argocd # add argocd namespace
+# kubectl create namespace dev # add dev namespace
 #kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml # install argocd in cluster
 #kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}' # convert ui to loadbalancer
 #kubectl -n argocd patch secret argocd-secret -p '{"stringData":  { "admin.password": "$2y$12$Kg4H0rLL/RVrWUVhj6ykeO3Ei/YqbGaqp.jAtzzUSJdYWT6LUh/n6", "admin.passwordMtime": "'$(date +%FT%T%Z)'" }}' # set argocd password to mysupersecretpassword
@@ -27,9 +27,21 @@ kubectl create namespace dev # add dev namespace
 #kubectl apply -f dns-config-job.yaml na finalerraaa
 
 #INSTALAR O GITLABBB
-#helm repo add gitlab https://charts.gitlab.io/
-#helm repo update
-#helm install gitlab gitlab/gitlab -f gitlab-values.yml --namespace gitlab --create-namespace
+helm repo add gitlab https://charts.gitlab.io/
+helm repo update
+# helm install gitlab gitlab/gitlab -f gitlab-values.yml --namespace gitlab --create-namespace 
+helm install gitlab gitlab/gitlab \
+  --namespace gitlab \
+  --set global.hosts.domain=gitlab.localhost \
+  --set global.ingress.configureCertmanager=false \
+  --set global.ingress.class=nginx \
+  --set nginx-ingress.enabled=true \
+  --set certmanager.install=false \
+  --set global.edition=ce \
+  --set gitlab-runner.install=false \
+  --create-namespace \
+  --timeout 600s \
+  --set global.hosts.externalIP=10.42.42.42
 ##afeter the isntalation:
 #kubectl apply -f gitlab-ingress.yaml (-n gitlab????)
 
