@@ -1,0 +1,18 @@
+global:
+  hosts:
+    domain: gitlab.localhost
+  ingress:
+    configureCertmanager: false
+    class: nginx
+  edition: ce
+
+nginx-ingress:
+  enabled: true
+
+certmanager:
+  install: false
+
+gitlab-runner:
+  runners:
+    gitlabUrl: http://gitlab-webservice-default.gitlab.svc.cluster.local
+

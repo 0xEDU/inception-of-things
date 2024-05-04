@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitlab-ingress
+  namespace: gitlab
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"  # Add this to allow HTTP
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: gitlab.gitlab.localhost
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: gitlab-webservice-default
+            port:
+              number: 80  # GitLab is served over HTTP

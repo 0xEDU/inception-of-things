@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: update-coredns
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      containers:
+      - name: update-coredns
+        image: bitnami/kubectl
+        command: ["kubectl", "get", "configmap", "coredns", "-n", "kube-system", "-o", "yaml"]
+        args:
+        - |-
+          | sed 's|fallthrough|10.43.224.250 gitlab.gitlab.localhost\n      fallthrough|'
+          | kubectl apply -f -
+      restartPolicy: OnFailure

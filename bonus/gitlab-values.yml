@@ -1,0 +1,124 @@
+# global:
+#   hosts:
+#     domain: gitlab.localhost
+#   ingress:
+#     configureCertmanager: false
+#     class: nginx
+#     annotations:
+#       kubernetes.io/ingress.class: "nginx"
+#     enabled: true
+#   edition: ce
+
+# # nginx-ingress:
+# #   enabled: true
+# #   controller:
+# #     service:
+# #       ports:
+# #         http: 8082
+
+# nginx-ingress:
+#   enabled: true
+#   controller:
+#     service:
+#       type: NodePort
+#       nodePorts:
+#         http: 8082
+
+# certmanager:
+#   install: false
+
+# gitlab-runner:
+#   runners:
+#     gitlabUrl: http://gitlab-webservice-default.gitlab.svc.cluster.local
+
+
+
+
+#attemp 2
+# global:
+#   hosts:
+#     domain: gitlab.localhost
+#   ingress:
+#     configureCertmanager: false
+#     class: nginx
+#     annotations:
+#       kubernetes.io/ingress.class: "nginx"
+#       nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+#     enabled: true
+#   edition: ce
+
+
+# #THIRDDD
+# # Nginx Ingress configuration
+# nginx-ingress:
+#   enabled: true
+#   controller:
+#     service:
+#       type: LoadBalancer
+#       ports:
+#         http: 8082
+
+# certmanager:
+#   install: false
+
+# gitlab-runner:
+#   runners:
+#     gitlabUrl: http://gitlab-webservice-default.gitlab.svc.cluster.local
+
+#global:
+#  hosts:
+#    domain: gitlab.localhost  # The external domain for GitLab
+#  ingress:
+#    configureCertmanager: false
+#    class: nginx  # Using the existing Nginx ingress controller
+#    annotations:
+#      kubernetes.io/ingress.class: "nginx"
+#      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+#    enabled: true
+#  edition: ce
+
+## Example of ingress specification for GitLab to be served on port 8082
+#gitlab:
+#  webservice:
+#    ingress:
+#      annotations:
+#        nginx.ingress.kubernetes.io/rewrite-target: /
+#      paths:
+#        - /
+#      hosts:
+#        - gitlab.localhost
+
+#nginx-ingress:
+#  enabled: false  # Do not deploy another Nginx Ingress
+
+#certmanager:
+#  install: false
+
+#gitlab-runner:
+#  runners:
+#    gitlabUrl: http://gitlab-webservice-default.gitlab.svc.cluster.local
+
+# gitlab-values.yml
+global:
+  hosts:
+    domain: gitlab.gitlab.localhost
+  ingress:
+    configureCertmanager: false
+    class: nginx
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    enabled: true
+  edition: ce
+
+# Adjusting Nginx Ingress Controller deployment (assuming it's controlled outside GitLab helm)
+nginx-ingress:
+  enabled: false  # Do not deploy if already deployed
+
+certmanager:
+  install: false
+
+gitlab-runner:
+  runners:
+    gitlabUrl: http://gitlab-webservice-default.gitlab.svc.cluster.local
+
