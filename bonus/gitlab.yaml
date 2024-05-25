@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitlab
+spec:
+  selector:
+    app: gitlab
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8888
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitlab
+  labels:
+    app: gitlab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitlab
+  template:
+    metadata:
+      labels:
+        app: gitlab
+    spec:
+      containers:
+      - name: gitlab
+        image: benanianas/containerd-gitlab
+        ports:
+        - containerPort: 8888
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+spec:
+  rules:
+  - host: gitlab.172.25.0.3.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gitlab
+            port:
+              number: 80
