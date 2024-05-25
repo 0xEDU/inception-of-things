@@ -56,3 +56,6 @@ kubectl apply -f argocd-application.yml -n argocd # specify repo and application
 
 #DELETAAR TUUDO
 #k3d cluster delete bonus-cluster
+
+#external_url "http://localhost:8888"
+#gitlab_rails["initial_root_password"] = "rootp@ss"
