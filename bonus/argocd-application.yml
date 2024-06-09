@@ -6,9 +6,9 @@ metadata:
   name: iot-app
 spec:
   project: iot-app-project
-  source:
-    repoURL: https://github.com/guiribei/guribeir-argocd.git
-    targetRevision: main
+  source: 
+    repoURL: http://gitlab.gitlab.svc/root/guribeir-argocd.git
+    targetRevision: HEAD
     path: app
     directory:
       recurse: true
