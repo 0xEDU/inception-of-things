@@ -2,13 +2,29 @@
 
 TOKEN=tokentokentokentoken
 
-# wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash # install k3d
-# sudo wget -q https://github.com/argoproj/argo-cd/releases/download/v2.10.6/argocd-linux-amd64 -O /usr/local/bin/argocd # install argocd cli
-# sudo chmod 655 /usr/local/bin/argocd # give proper permission to argocd
+if  which k3d > /dev/null 2>&1; then
+  echo "k3d already installed"
+else
+  wget -q -O - https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash # install k3d
+fi
 
-# curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+if which kubectl > /dev/null 2>&1; then
+  echo "kubectl already installed"
+else
+	curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+	sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+fi
 
-# sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+if which glab > /dev/null 2>&1; then
+  echo "glab already installed"
+else
+	GLAB="glab_1.36.0_$(uname -s)_$(uname -m).tar.gz"
+	curl -LO "https://gitlab.com/gitlab-org/cli/-/releases/v1.36.0/downloads/${GLAB}"
+	tar -xzf ${GLAB}
+	sudo install -o root -g root -m 0755 bin/glab /usr/local/bin/glab
+fi
+
+
 
 k3d cluster create bonus-cluster -p "8081:8081@loadbalancer" -p "80:80@loadbalancer" # create cluster
 
